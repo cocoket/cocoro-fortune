@@ -1,6 +1,26 @@
+/* ========================================
+   今日のこころ占い app.js
+======================================== */
+
+/*
+  シークレットのテスト設定
+
+  true  ：必ずシークレットが出る
+  false ：本番確率で抽選する
+*/
+const TEST_SECRET = true;
+
+/*
+  本番時のシークレット出現確率
+  0.001 = 0.1％、およそ1000回に1回
+*/
+const SECRET_PROBABILITY = 0.001;
+
+/* カード裏面画像 */
 const BACK_IMAGE =
   "images/パッケージ_こころトランプ.jpg";
 
+/* 画面の要素 */
 const cardImage =
   document.getElementById("cardImage");
 
@@ -22,32 +42,29 @@ const cardMessage =
 const sparkleLayer =
   document.getElementById("sparkleLayer");
 
+/* 状態管理 */
 let lastCardIndex = -1;
 let isDrawing = false;
 let shuffleTimer = null;
 
-/* ランダムカードを選ぶ */
 
-function getRandomCardIndex(excludeIndex = -1) {
-  if (!Array.isArray(cards) || cards.length === 0) {
-    return -1;
-  }
+/* ========================================
+   シークレットカードを探す
+======================================== */
 
-  const secretIndex = cards.findIndex(
-    function (card) {
-      return card.suit === "secret";
-    }
-  );
+function getSecretCardIndex() {
+  return cards.findIndex(function (card) {
+    return card.suit === "secret";
+  });
+}
 
-  /* シークレットは1000回に1回 */
-  if (
-    secretIndex !== -1 &&
-    if (true) {
-  ) {
-    return secretIndex;
-  }
 
-  const normalCardIndexes = cards
+/* ========================================
+   通常カードの番号一覧を作る
+======================================== */
+
+function getNormalCardIndexes() {
+  return cards
     .map(function (card, index) {
       return {
         card: card,
@@ -60,6 +77,47 @@ function getRandomCardIndex(excludeIndex = -1) {
     .map(function (item) {
       return item.index;
     });
+}
+
+
+/* ========================================
+   最終カードを抽選する
+======================================== */
+
+function getRandomCardIndex(excludeIndex = -1) {
+  if (!Array.isArray(cards) || cards.length === 0) {
+    return -1;
+  }
+
+  const secretIndex =
+    getSecretCardIndex();
+
+  /*
+    テスト中は必ずシークレット
+  */
+  if (
+    TEST_SECRET &&
+    secretIndex !== -1
+  ) {
+    return secretIndex;
+  }
+
+  /*
+    本番時のシークレット抽選
+  */
+  if (
+    !TEST_SECRET &&
+    secretIndex !== -1 &&
+    Math.random() < SECRET_PROBABILITY
+  ) {
+    return secretIndex;
+  }
+
+  /*
+    通常52枚から選ぶ
+  */
+  const normalCardIndexes =
+    getNormalCardIndexes();
 
   if (normalCardIndexes.length === 0) {
     return -1;
@@ -69,26 +127,32 @@ function getRandomCardIndex(excludeIndex = -1) {
     return normalCardIndexes[0];
   }
 
-  let index;
+  let selectedIndex;
 
   do {
-    index =
+    selectedIndex =
       normalCardIndexes[
         Math.floor(
           Math.random() *
           normalCardIndexes.length
         )
       ];
-  } while (index === excludeIndex);
+  } while (
+    selectedIndex === excludeIndex
+  );
 
-  return index;
+  return selectedIndex;
 }
 
-/* カードを表示 */
+
+/* ========================================
+   カードを画面へ表示する
+======================================== */
 
 function displayCard(card) {
   cardImage.src = card.image;
-  cardImage.alt = card.word + "のカード";
+  cardImage.alt =
+    card.word + "のカード";
 
   if (card.suit === "secret") {
     cardWord.textContent =
@@ -111,10 +175,14 @@ function displayCard(card) {
     "この言葉を少しだけ意識して、今日を過ごしてみましょう。";
 }
 
-/* 初期画面 */
+
+/* ========================================
+   最初の画面を表示する
+======================================== */
 
 function showBackCard() {
   cardImage.src = BACK_IMAGE;
+
   cardImage.alt =
     "こころトランプのカード裏面";
 
@@ -131,7 +199,10 @@ function showBackCard() {
     "今日のカードを引く";
 }
 
-/* ボタンの状態 */
+
+/* ========================================
+   ボタンの状態を切り替える
+======================================== */
 
 function setDrawingState(drawing) {
   isDrawing = drawing;
@@ -154,7 +225,10 @@ function setDrawingState(drawing) {
   }
 }
 
-/* ドラムロール文字 */
+
+/* ========================================
+   ドラムロール文字
+======================================== */
 
 function getDrumText(step, totalSteps) {
   const progress =
@@ -176,7 +250,7 @@ function getDrumText(step, totalSteps) {
     return "だらららら……";
   }
 
-  if (progress < 0.9) {
+  if (progress < 0.90) {
     return "だらら……";
   }
 
@@ -187,7 +261,10 @@ function getDrumText(step, totalSteps) {
   return "だ……";
 }
 
-/* 徐々に遅くする */
+
+/* ========================================
+   シャッフルを徐々に遅くする
+======================================== */
 
 function getShuffleDelay(step, totalSteps) {
   const progress =
@@ -209,7 +286,7 @@ function getShuffleDelay(step, totalSteps) {
     return 105;
   }
 
-  if (progress < 0.9) {
+  if (progress < 0.90) {
     return 165;
   }
 
@@ -220,7 +297,10 @@ function getShuffleDelay(step, totalSteps) {
   return 330;
 }
 
-/* キラキラを表示 */
+
+/* ========================================
+   キラキラを作る
+======================================== */
 
 function playSparkles(isSecret) {
   if (!sparkleLayer) {
@@ -230,27 +310,57 @@ function playSparkles(isSecret) {
   sparkleLayer.innerHTML = "";
 
   const normalSparkles = [
-    { symbol: "✨", className: "sparkle sparkle-1" },
-    { symbol: "✨", className: "sparkle sparkle-2" },
-    { symbol: "✦", className: "sparkle sparkle-3" },
-    { symbol: "✨", className: "sparkle sparkle-4" }
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-1"
+    },
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-2"
+    },
+    {
+      symbol: "✦",
+      className: "sparkle sparkle-3"
+    },
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-4"
+    }
   ];
 
   const secretSparkles = [
-    { symbol: "✨", className: "sparkle sparkle-1" },
-    { symbol: "🌟", className: "sparkle sparkle-2" },
-    { symbol: "✦", className: "sparkle sparkle-3" },
-    { symbol: "✨", className: "sparkle sparkle-4" },
-    { symbol: "⭐", className: "sparkle sparkle-5" },
-    { symbol: "✨", className: "sparkle sparkle-6" }
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-1"
+    },
+    {
+      symbol: "🌟",
+      className: "sparkle sparkle-2"
+    },
+    {
+      symbol: "✦",
+      className: "sparkle sparkle-3"
+    },
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-4"
+    },
+    {
+      symbol: "⭐",
+      className: "sparkle sparkle-5"
+    },
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-6"
+    }
   ];
 
-  const sparkles =
+  const sparkleItems =
     isSecret
       ? secretSparkles
       : normalSparkles;
 
-  sparkles.forEach(function (item) {
+  sparkleItems.forEach(function (item) {
     const sparkle =
       document.createElement("span");
 
@@ -269,6 +379,9 @@ function playSparkles(isSecret) {
     "show-sparkles"
   );
 
+  /*
+    アニメーションを毎回最初から再生する
+  */
   void sparkleLayer.offsetWidth;
 
   sparkleLayer.classList.add(
@@ -284,11 +397,22 @@ function playSparkles(isSecret) {
   }, isSecret ? 2200 : 1500);
 }
 
-/* 最終カードを確定 */
+
+/* ========================================
+   最終カードを表示する
+======================================== */
 
 function finishDrawing(finalIndex) {
   const finalCard =
     cards[finalIndex];
+
+  if (!finalCard) {
+    statusText.textContent =
+      "カードを表示できませんでした";
+
+    setDrawingState(false);
+    return;
+  }
 
   const isSecret =
     finalCard.suit === "secret";
@@ -300,6 +424,9 @@ function finishDrawing(finalIndex) {
     "is-shuffling"
   );
 
+  /*
+    最後の決定音を文字で表現
+  */
   statusText.textContent =
     isSecret
       ? "ジャーン！！"
@@ -335,12 +462,18 @@ function finishDrawing(finalIndex) {
 
     playSparkles(isSecret);
 
+    /*
+      通常のカード確定アニメーションを解除
+    */
     window.setTimeout(function () {
       cardFrame.classList.remove(
         "is-revealing"
       );
     }, 850);
 
+    /*
+      シークレット専用演出を解除
+    */
     window.setTimeout(function () {
       cardFrame.classList.remove(
         "secret-card"
@@ -352,7 +485,10 @@ function finishDrawing(finalIndex) {
   }, isSecret ? 700 : 520);
 }
 
-/* 占いスタート */
+
+/* ========================================
+   占いを開始する
+======================================== */
 
 function startDrawing() {
   if (
@@ -406,6 +542,31 @@ function startDrawing() {
     statusText.textContent =
       "カードを読み込めませんでした";
 
+    cardFrame.classList.remove(
+      "is-shuffling"
+    );
+
+    setDrawingState(false);
+    return;
+  }
+
+  /*
+    シャッフル中には
+    シークレット画像を見せない
+  */
+  const normalCards =
+    cards.filter(function (card) {
+      return card.suit !== "secret";
+    });
+
+  if (normalCards.length === 0) {
+    statusText.textContent =
+      "通常カードが見つかりませんでした";
+
+    cardFrame.classList.remove(
+      "is-shuffling"
+    );
+
     setDrawingState(false);
     return;
   }
@@ -418,11 +579,6 @@ function startDrawing() {
       finishDrawing(finalIndex);
       return;
     }
-
-    const normalCards =
-      cards.filter(function (card) {
-        return card.suit !== "secret";
-      });
 
     const temporaryCard =
       normalCards[
@@ -462,7 +618,10 @@ function startDrawing() {
   shuffleStep();
 }
 
-/* 画像を先読み */
+
+/* ========================================
+   画像を先読みする
+======================================== */
 
 function preloadImages() {
   const imageUrls = [
@@ -480,7 +639,10 @@ function preloadImages() {
   });
 }
 
-/* 初期化 */
+
+/* ========================================
+   初期化
+======================================== */
 
 drawButton.addEventListener(
   "click",
