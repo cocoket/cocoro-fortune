@@ -470,3 +470,57 @@ h1 {
         animation: none;
     }
 }
+/* ================================
+   文字を濃くして読みやすくする
+================================ */
+
+body {
+    color: #4b3425;
+}
+
+h1 {
+    color: #4a2f1f;
+    font-weight: 800;
+}
+
+.lead {
+    color: #695548;
+    font-weight: 500;
+}
+
+.status-text {
+    color: #5a321e;
+    font-size: 1.08rem;
+    font-weight: 800;
+    opacity: 1;
+}
+
+.card-word {
+    color: #a94718;
+    font-weight: 800;
+}
+
+.card-message {
+    color: #513d30;
+    font-weight: 500;
+}
+
+.brand-message {
+    color: #4f3a2d;
+    font-weight: 500;
+}
+
+.fortune-footer {
+    color: #725f52;
+    font-weight: 500;
+}
+
+/* キラキラは要素が作られた時だけ表示 */
+
+.sparkle-layer:empty {
+    display: none;
+}
+
+.sparkle-layer:not(:empty) {
+    display: block;
+}
