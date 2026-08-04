@@ -79,12 +79,24 @@ function displayCard(card) {
   cardImage.src = card.image;
   cardImage.alt = card.word + "のカード";
 
+  if (card.suit === "secret") {
+    cardWord.textContent =
+      "✨ シークレットカードが現れました！ ✨";
+
+    cardMessage.textContent =
+      card.message ||
+      "今日のあなたに必要な言葉は、あなたの中にあるよ。";
+
+    return;
+  }
+
   cardWord.textContent =
     "今日のキーワードは「" +
     card.word +
     "」";
 
   cardMessage.textContent =
+    card.message ||
     "この言葉を少しだけ意識して、今日を過ごしてみましょう。";
 }
 
