@@ -295,9 +295,23 @@ function finishDrawing(finalIndex) {
 
   window.setTimeout(function () {
     displayCard(finalCard);
+if (finalCard.suit === "secret") {
 
-    statusText.textContent =
-      "今日のカードはこれ！";
+  cardFrame.classList.add("secret-card");
+
+}
+    
+   if (finalCard.suit === "secret") {
+
+  statusText.textContent =
+    "🎉✨ シークレット！！ ✨🎉";
+
+} else {
+
+  statusText.textContent =
+    "今日のカードはこれ！";
+
+}
 
     cardFrame.classList.add(
       "is-revealing"
@@ -305,11 +319,14 @@ function finishDrawing(finalIndex) {
 
     playSparkles();
 
-    window.setTimeout(function () {
-      cardFrame.classList.remove(
-        "is-revealing"
-      );
-    }, 850);
+  window.setTimeout(function () {
+
+    cardFrame.classList.remove("is-revealing");
+    cardFrame.classList.remove("secret-card");
+
+    setDrawingState(false);
+
+}, 850);
 
     window.setTimeout(function () {
       setDrawingState(false);
