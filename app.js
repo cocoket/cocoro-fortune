@@ -29,6 +29,32 @@ let shuffleTimer = null;
 /* ランダムカードを選ぶ */
 
 function getRandomCardIndex(excludeIndex = -1) {
+
+  if (!Array.isArray(cards) || cards.length === 0) {
+    return -1;
+  }
+
+  // 一番最後がシークレットカード
+  const secretIndex = cards.length - 1;
+
+  // 1000回に1回
+  if (Math.random() < 0.001) {
+    return secretIndex;
+  }
+
+  let index;
+
+  do {
+    // シークレット以外から選ぶ
+    index = Math.floor(
+      Math.random() * (cards.length - 1)
+    );
+
+  } while (index === excludeIndex);
+
+  return index;
+
+}  
   if (!Array.isArray(cards) || cards.length === 0) {
     return -1;
   }
