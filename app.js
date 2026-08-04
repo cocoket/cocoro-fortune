@@ -171,12 +171,48 @@ function getShuffleDelay(step, totalSteps) {
   return 330;
 }
 
-/* キラキラを再生 */
+/* キラキラを表示 */
 
 function playSparkles() {
   if (!sparkleLayer) {
     return;
   }
+
+  sparkleLayer.innerHTML = "";
+
+  const sparkles = [
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-1"
+    },
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-2"
+    },
+    {
+      symbol: "✦",
+      className: "sparkle sparkle-3"
+    },
+    {
+      symbol: "✨",
+      className: "sparkle sparkle-4"
+    }
+  ];
+
+  sparkles.forEach(function (item) {
+    const sparkle =
+      document.createElement("span");
+
+    sparkle.className =
+      item.className;
+
+    sparkle.textContent =
+      item.symbol;
+
+    sparkleLayer.appendChild(
+      sparkle
+    );
+  });
 
   sparkleLayer.classList.remove(
     "show-sparkles"
@@ -187,6 +223,14 @@ function playSparkles() {
   sparkleLayer.classList.add(
     "show-sparkles"
   );
+
+  window.setTimeout(function () {
+    sparkleLayer.classList.remove(
+      "show-sparkles"
+    );
+
+    sparkleLayer.innerHTML = "";
+  }, 1500);
 }
 
 /* 最終カードを確定 */
@@ -211,7 +255,7 @@ function finishDrawing(finalIndex) {
   cardMessage.textContent =
     "あなたへの今日の言葉は……";
 
-  window.setTimeout(() => {
+  window.setTimeout(function () {
     displayCard(finalCard);
 
     statusText.textContent =
@@ -223,19 +267,13 @@ function finishDrawing(finalIndex) {
 
     playSparkles();
 
-    window.setTimeout(() => {
+    window.setTimeout(function () {
       cardFrame.classList.remove(
         "is-revealing"
       );
     }, 850);
 
-    window.setTimeout(() => {
-      if (sparkleLayer) {
-        sparkleLayer.classList.remove(
-          "show-sparkles"
-        );
-      }
-
+    window.setTimeout(function () {
       setDrawingState(false);
     }, 1450);
 
@@ -266,6 +304,8 @@ function startDrawing() {
   );
 
   if (sparkleLayer) {
+    sparkleLayer.innerHTML = "";
+
     sparkleLayer.classList.remove(
       "show-sparkles"
     );
@@ -339,21 +379,17 @@ function startDrawing() {
 function preloadImages() {
   const imageUrls = [
     BACK_IMAGE,
-    ...cards.map(
-      function (card) {
-        return card.image;
-      }
-    )
+    ...cards.map(function (card) {
+      return card.image;
+    })
   ];
 
-  imageUrls.forEach(
-    function (url) {
-      const image =
-        new Image();
+  imageUrls.forEach(function (url) {
+    const image =
+      new Image();
 
-      image.src = url;
-    }
-  );
+    image.src = url;
+  });
 }
 
 /* 初期化 */
