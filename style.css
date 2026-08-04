@@ -228,3 +228,203 @@ h1{
     }
 
 }
+/* ================================
+   Ver.2 ドラムロール強化演出
+================================ */
+
+/* カード枠の基準位置 */
+.card-frame{
+    position:relative;
+    transform-style:preserve-3d;
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+/* シャッフル中 */
+.card-frame.is-shuffling{
+    animation:
+        drumShuffle .12s infinite alternate ease-in-out;
+}
+
+/* シャッフル中の画像 */
+.card-frame.is-shuffling .card-image{
+    filter:
+        brightness(1.08)
+        saturate(1.12);
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.22);
+}
+
+/* 最後にポンと確定 */
+.card-frame.is-revealing{
+    animation:
+        finalCardReveal .85s
+        cubic-bezier(.22,1.4,.36,1);
+}
+
+/* キラキラ演出の土台 */
+.card-frame.is-sparkling::before,
+.card-frame.is-sparkling::after{
+    position:absolute;
+    z-index:5;
+    pointer-events:none;
+    font-size:34px;
+    opacity:0;
+}
+
+/* 左上のキラキラ */
+.card-frame.is-sparkling::before{
+    content:"✨";
+    top:4%;
+    left:-12%;
+    animation:sparkleLeft 1.2s ease-out;
+}
+
+/* 右上のキラキラ */
+.card-frame.is-sparkling::after{
+    content:"✨";
+    top:18%;
+    right:-12%;
+    animation:sparkleRight 1.2s ease-out .1s;
+}
+
+/* シャッフル中の揺れ */
+@keyframes drumShuffle{
+    0%{
+        transform:
+            translateX(-7px)
+            translateY(-2px)
+            rotate(-2deg)
+            scale(1.025);
+    }
+
+    100%{
+        transform:
+            translateX(7px)
+            translateY(2px)
+            rotate(2deg)
+            scale(1.045);
+    }
+}
+
+/* 最終カードの「だん！」 */
+@keyframes finalCardReveal{
+    0%{
+        opacity:.2;
+        transform:
+            scale(.68)
+            rotateY(90deg);
+        filter:brightness(1.7);
+    }
+
+    45%{
+        opacity:1;
+        transform:
+            scale(1.16)
+            rotateY(0deg);
+        filter:brightness(1.25);
+    }
+
+    68%{
+        transform:scale(.96);
+    }
+
+    84%{
+        transform:scale(1.05);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1);
+        filter:brightness(1);
+    }
+}
+
+/* 左のキラキラ */
+@keyframes sparkleLeft{
+    0%{
+        opacity:0;
+        transform:
+            scale(.3)
+            rotate(-25deg);
+    }
+
+    35%{
+        opacity:1;
+        transform:
+            scale(1.3)
+            rotate(10deg);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            translate(-18px,-28px)
+            scale(.6)
+            rotate(35deg);
+    }
+}
+
+/* 右のキラキラ */
+@keyframes sparkleRight{
+    0%{
+        opacity:0;
+        transform:
+            scale(.3)
+            rotate(25deg);
+    }
+
+    35%{
+        opacity:1;
+        transform:
+            scale(1.3)
+            rotate(-10deg);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            translate(18px,-28px)
+            scale(.6)
+            rotate(-35deg);
+    }
+}
+
+/* ボタンを押したとき */
+.draw-button:active{
+    transform:scale(.95);
+}
+
+/* 選択中のボタン */
+.draw-button.is-drawing{
+    animation:
+        buttonPulse .8s infinite alternate;
+}
+
+/* ボタンの鼓動 */
+@keyframes buttonPulse{
+    0%{
+        filter:brightness(.96);
+        transform:scale(.98);
+    }
+
+    100%{
+        filter:brightness(1.08);
+        transform:scale(1.02);
+    }
+}
+
+/* 動きを減らす設定への配慮 */
+@media (prefers-reduced-motion: reduce){
+
+    .card-frame.is-shuffling,
+    .card-frame.is-revealing,
+    .card-frame.is-sparkling::before,
+    .card-frame.is-sparkling::after,
+    .draw-button.is-drawing{
+        animation:none;
+    }
+
+}
