@@ -29,45 +29,56 @@ let shuffleTimer = null;
 /* ランダムカードを選ぶ */
 
 function getRandomCardIndex(excludeIndex = -1) {
-
   if (!Array.isArray(cards) || cards.length === 0) {
     return -1;
   }
 
-  // 一番最後がシークレットカード
-  const secretIndex = cards.length - 1;
+  const secretIndex = cards.findIndex(
+    function (card) {
+      return card.suit === "secret";
+    }
+  );
 
-  // 1000回に1回
-  if (Math.random() < 0.001) {
+  /* シークレットは1000回に1回 */
+  if (
+    secretIndex !== -1 &&
+    Math.random() < 0.001
+  ) {
     return secretIndex;
   }
 
-  let index;
+  const normalCardIndexes = cards
+    .map(function (card, index) {
+      return {
+        card: card,
+        index: index
+      };
+    })
+    .filter(function (item) {
+      return item.card.suit !== "secret";
+    })
+    .map(function (item) {
+      return item.index;
+    });
 
-  do {
-    // シークレット以外から選ぶ
-    index = Math.floor(
-      Math.random() * (cards.length - 1)
-    );
-
-  } while (index === excludeIndex);
-
-  return index;
-
-}  
-  if (!Array.isArray(cards) || cards.length === 0) {
+  if (normalCardIndexes.length === 0) {
     return -1;
   }
 
-  if (cards.length === 1) {
-    return 0;
+  if (normalCardIndexes.length === 1) {
+    return normalCardIndexes[0];
   }
 
   let index;
 
   do {
     index =
-      Math.floor(Math.random() * cards.length);
+      normalCardIndexes[
+        Math.floor(
+          Math.random() *
+          normalCardIndexes.length
+        )
+      ];
   } while (index === excludeIndex);
 
   return index;
@@ -211,31 +222,33 @@ function getShuffleDelay(step, totalSteps) {
 
 /* キラキラを表示 */
 
-function playSparkles() {
+function playSparkles(isSecret) {
   if (!sparkleLayer) {
     return;
   }
 
   sparkleLayer.innerHTML = "";
 
-  const sparkles = [
-    {
-      symbol: "✨",
-      className: "sparkle sparkle-1"
-    },
-    {
-      symbol: "✨",
-      className: "sparkle sparkle-2"
-    },
-    {
-      symbol: "✦",
-      className: "sparkle sparkle-3"
-    },
-    {
-      symbol: "✨",
-      className: "sparkle sparkle-4"
-    }
+  const normalSparkles = [
+    { symbol: "✨", className: "sparkle sparkle-1" },
+    { symbol: "✨", className: "sparkle sparkle-2" },
+    { symbol: "✦", className: "sparkle sparkle-3" },
+    { symbol: "✨", className: "sparkle sparkle-4" }
   ];
+
+  const secretSparkles = [
+    { symbol: "✨", className: "sparkle sparkle-1" },
+    { symbol: "🌟", className: "sparkle sparkle-2" },
+    { symbol: "✦", className: "sparkle sparkle-3" },
+    { symbol: "✨", className: "sparkle sparkle-4" },
+    { symbol: "⭐", className: "sparkle sparkle-5" },
+    { symbol: "✨", className: "sparkle sparkle-6" }
+  ];
+
+  const sparkles =
+    isSecret
+      ? secretSparkles
+      : normalSparkles;
 
   sparkles.forEach(function (item) {
     const sparkle =
@@ -268,7 +281,7 @@ function playSparkles() {
     );
 
     sparkleLayer.innerHTML = "";
-  }, 1500);
+  }, isSecret ? 2200 : 1500);
 }
 
 /* 最終カードを確定 */
@@ -276,6 +289,9 @@ function playSparkles() {
 function finishDrawing(finalIndex) {
   const finalCard =
     cards[finalIndex];
+
+  const isSecret =
+    finalCard.suit === "secret";
 
   lastCardIndex =
     finalIndex;
@@ -285,54 +301,55 @@ function finishDrawing(finalIndex) {
   );
 
   statusText.textContent =
-    "だん！！";
+    isSecret
+      ? "ジャーン！！"
+      : "だん！！";
 
   cardWord.textContent =
-    "今日のカードが決まりました";
+    isSecret
+      ? "特別なカードが現れました"
+      : "今日のカードが決まりました";
 
   cardMessage.textContent =
-    "あなたへの今日の言葉は……";
+    isSecret
+      ? "これは、とてもめずらしいシークレットカードです。"
+      : "あなたへの今日の言葉は……";
 
   window.setTimeout(function () {
     displayCard(finalCard);
-if (finalCard.suit === "secret") {
 
-  cardFrame.classList.add("secret-card");
-
-}
-    
-   if (finalCard.suit === "secret") {
-
-  statusText.textContent =
-    "🎉✨ シークレット！！ ✨🎉";
-
-} else {
-
-  statusText.textContent =
-    "今日のカードはこれ！";
-
-}
+    statusText.textContent =
+      isSecret
+        ? "🎉✨ シークレット！！ ✨🎉"
+        : "今日のカードはこれ！";
 
     cardFrame.classList.add(
       "is-revealing"
     );
 
-    playSparkles();
+    if (isSecret) {
+      cardFrame.classList.add(
+        "secret-card"
+      );
+    }
 
-  window.setTimeout(function () {
-
-    cardFrame.classList.remove("is-revealing");
-    cardFrame.classList.remove("secret-card");
-
-    setDrawingState(false);
-
-}, 850);
+    playSparkles(isSecret);
 
     window.setTimeout(function () {
-      setDrawingState(false);
-    }, 1450);
+      cardFrame.classList.remove(
+        "is-revealing"
+      );
+    }, 850);
 
-  }, 520);
+    window.setTimeout(function () {
+      cardFrame.classList.remove(
+        "secret-card"
+      );
+
+      setDrawingState(false);
+    }, isSecret ? 2200 : 1450);
+
+  }, isSecret ? 700 : 520);
 }
 
 /* 占いスタート */
@@ -358,6 +375,10 @@ function startDrawing() {
     "is-revealing"
   );
 
+  cardFrame.classList.remove(
+    "secret-card"
+  );
+
   if (sparkleLayer) {
     sparkleLayer.innerHTML = "";
 
@@ -381,6 +402,14 @@ function startDrawing() {
       lastCardIndex
     );
 
+  if (finalIndex === -1) {
+    statusText.textContent =
+      "カードを読み込めませんでした";
+
+    setDrawingState(false);
+    return;
+  }
+
   let step = 0;
   const totalSteps = 48;
 
@@ -390,14 +419,18 @@ function startDrawing() {
       return;
     }
 
-    const temporaryIndex =
-      Math.floor(
-        Math.random() *
-        cards.length
-      );
+    const normalCards =
+      cards.filter(function (card) {
+        return card.suit !== "secret";
+      });
 
     const temporaryCard =
-      cards[temporaryIndex];
+      normalCards[
+        Math.floor(
+          Math.random() *
+          normalCards.length
+        )
+      ];
 
     cardImage.src =
       temporaryCard.image;
