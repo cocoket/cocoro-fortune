@@ -1,0 +1,169 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#FFF7F1;
+    font-family:"Yu Gothic","Hiragino Sans","Meiryo",sans-serif;
+    color:#5A4635;
+}
+
+.fortune-app{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:30px 15px;
+}
+
+.fortune-panel{
+    width:100%;
+    max-width:480px;
+    background:#ffffff;
+    border-radius:24px;
+    padding:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.fortune-header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.eyebrow{
+    color:#C37B42;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+h1{
+    font-size:2rem;
+    margin-bottom:12px;
+}
+
+.lead{
+    color:#777;
+    line-height:1.7;
+}
+
+.card-stage{
+    display:flex;
+    justify-content:center;
+    margin:25px 0;
+}
+
+.card-frame{
+    width:260px;
+}
+
+.card-image{
+    width:100%;
+    border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.result-area{
+    text-align:center;
+    margin:25px 0;
+}
+
+.status-text{
+    color:#999;
+    font-size:.9rem;
+    margin-bottom:10px;
+}
+
+.card-word{
+    color:#B35A2D;
+    font-size:1.8rem;
+    margin-bottom:15px;
+}
+
+.card-message{
+    line-height:1.8;
+    font-size:1rem;
+}
+
+.action-area{
+    text-align:center;
+    margin:30px 0;
+}
+
+.draw-button{
+    background:#F39B3D;
+    color:#fff;
+    border:none;
+    border-radius:50px;
+    padding:16px 36px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.draw-button:hover{
+    background:#E88722;
+    transform:scale(1.05);
+}
+
+.brand-area{
+    margin-top:35px;
+    text-align:center;
+}
+
+.brand-message{
+    margin-bottom:18px;
+    line-height:1.8;
+}
+
+.link-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.link-button{
+    display:block;
+    text-decoration:none;
+    padding:15px;
+    border-radius:40px;
+    font-weight:bold;
+}
+
+.primary{
+    background:#E96A4B;
+    color:#fff;
+}
+
+.secondary{
+    background:#FFE5C6;
+    color:#7A542C;
+}
+
+.fortune-footer{
+    margin-top:30px;
+    text-align:center;
+    color:#999;
+    font-size:.9rem;
+}
+
+@media(max-width:480px){
+
+    .fortune-panel{
+        padding:20px;
+    }
+
+    .card-frame{
+        width:220px;
+    }
+
+    h1{
+        font-size:1.7rem;
+    }
+
+    .card-word{
+        font-size:1.5rem;
+    }
+
+}
