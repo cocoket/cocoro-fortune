@@ -57,5 +57,14 @@ const cards = [
   { suit: "spade", rank: "10", word: "責任", image: "images/スペード10_責任.jpg" },
   { suit: "spade", rank: "J", word: "貢献", image: "images/スペードJ_貢献.jpg" },
   { suit: "spade", rank: "Q", word: "多様性", image: "images/スペードQ_多様性.jpg" },
-  { suit: "spade", rank: "K", word: "謙虚", image: "images/スペードK_謙虚.jpg" }
+  { suit: "spade", rank: "K", word: "謙虚", image: "images/スペードK_謙虚.jpg" },
+
+  // シークレット（超レア）
+  {
+    suit: "secret",
+    rank: "SECRET",
+    word: "シークレット",
+    image: "images/シークレット_こころジョーカー.jpg",
+    message: "今日のあなたに必要な言葉は、あなたの中にあるよ。"
+  }
 ];
