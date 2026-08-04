@@ -524,3 +524,106 @@ h1 {
 .sparkle-layer:not(:empty) {
     display: block;
 }
+/* ================================
+   シークレットカード専用演出
+================================ */
+
+.card-frame.secret-card {
+    animation:
+        secretCardGlow 1.8s ease-in-out,
+        secretCardFloat 1.8s ease-in-out;
+    box-shadow:
+        0 0 22px rgba(255, 196, 54, .75),
+        0 0 48px rgba(255, 225, 125, .7),
+        0 0 85px rgba(255, 184, 44, .45);
+    border-radius: 18px;
+}
+
+.card-frame.secret-card .card-image {
+    filter:
+        brightness(1.08)
+        saturate(1.12);
+}
+
+/* シークレット時だけ背景をふわっと光らせる */
+.fortune-panel:has(.card-frame.secret-card) {
+    animation: secretPanelFlash 1.8s ease-out;
+}
+
+/* シークレットカードの金色発光 */
+@keyframes secretCardGlow {
+    0% {
+        filter: brightness(1);
+    }
+
+    25% {
+        filter:
+            brightness(1.3)
+            drop-shadow(0 0 14px rgba(255, 207, 71, .9));
+    }
+
+    55% {
+        filter:
+            brightness(1.12)
+            drop-shadow(0 0 28px rgba(255, 221, 123, .85));
+    }
+
+    100% {
+        filter: brightness(1);
+    }
+}
+
+/* シークレットカードが少し浮く */
+@keyframes secretCardFloat {
+    0% {
+        transform: scale(.85) translateY(14px);
+    }
+
+    35% {
+        transform: scale(1.12) translateY(-8px);
+    }
+
+    60% {
+        transform: scale(1.03) translateY(-3px);
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* 背景が一瞬ゴールドに光る */
+@keyframes secretPanelFlash {
+    0% {
+        background: #ffffff;
+    }
+
+    22% {
+        background: #fff5c9;
+    }
+
+    50% {
+        background: #fffaf0;
+    }
+
+    100% {
+        background: #ffffff;
+    }
+}
+
+/* シークレット表示文字 */
+.card-frame.secret-card + .result-area .status-text,
+.card-frame.secret-card + .result-area .card-word {
+    color: #b57a00;
+    text-shadow:
+        0 1px 0 #fff6cf,
+        0 0 10px rgba(255, 207, 71, .45);
+}
+
+/* 動きを減らす設定への配慮 */
+@media (prefers-reduced-motion: reduce) {
+    .card-frame.secret-card,
+    .fortune-panel:has(.card-frame.secret-card) {
+        animation: none;
+    }
+}
