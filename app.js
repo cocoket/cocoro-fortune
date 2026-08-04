@@ -42,7 +42,7 @@ function getRandomCardIndex(excludeIndex = -1) {
   /* シークレットは1000回に1回 */
   if (
     secretIndex !== -1 &&
-    Math.random() < 0.001
+    if (true) {
   ) {
     return secretIndex;
   }
