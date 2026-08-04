@@ -1,19 +1,32 @@
-const BACK_IMAGE = "images/パッケージ_こころトランプ.jpg";
+const BACK_IMAGE =
+  "images/パッケージ_こころトランプ.jpg";
 
-const cardImage = document.getElementById("cardImage");
-const cardFrame = document.getElementById("cardFrame");
-const drawButton = document.getElementById("drawButton");
-const statusText = document.getElementById("statusText");
-const cardWord = document.getElementById("cardWord");
-const cardMessage = document.getElementById("cardMessage");
+const cardImage =
+  document.getElementById("cardImage");
+
+const cardFrame =
+  document.getElementById("cardFrame");
+
+const drawButton =
+  document.getElementById("drawButton");
+
+const statusText =
+  document.getElementById("statusText");
+
+const cardWord =
+  document.getElementById("cardWord");
+
+const cardMessage =
+  document.getElementById("cardMessage");
+
+const sparkleLayer =
+  document.getElementById("sparkleLayer");
 
 let lastCardIndex = -1;
 let isDrawing = false;
 let shuffleTimer = null;
 
-/* --------------------------------
-   ランダムカードを選ぶ
--------------------------------- */
+/* ランダムカードを選ぶ */
 
 function getRandomCardIndex(excludeIndex = -1) {
   if (!Array.isArray(cards) || cards.length === 0) {
@@ -27,34 +40,34 @@ function getRandomCardIndex(excludeIndex = -1) {
   let index;
 
   do {
-    index = Math.floor(Math.random() * cards.length);
+    index =
+      Math.floor(Math.random() * cards.length);
   } while (index === excludeIndex);
 
   return index;
 }
 
-/* --------------------------------
-   カードを画面に表示
--------------------------------- */
+/* カードを表示 */
 
 function displayCard(card) {
   cardImage.src = card.image;
-  cardImage.alt = `${card.word}のカード`;
+  cardImage.alt = card.word + "のカード";
 
   cardWord.textContent =
-    `今日のキーワードは「${card.word}」`;
+    "今日のキーワードは「" +
+    card.word +
+    "」";
 
   cardMessage.textContent =
     "この言葉を少しだけ意識して、今日を過ごしてみましょう。";
 }
 
-/* --------------------------------
-   最初の裏面表示
--------------------------------- */
+/* 初期画面 */
 
 function showBackCard() {
   cardImage.src = BACK_IMAGE;
-  cardImage.alt = "こころトランプのカード裏面";
+  cardImage.alt =
+    "こころトランプのカード裏面";
 
   statusText.textContent =
     "カードを引く準備ができました";
@@ -69,9 +82,7 @@ function showBackCard() {
     "今日のカードを引く";
 }
 
-/* --------------------------------
-   ボタン状態
--------------------------------- */
+/* ボタンの状態 */
 
 function setDrawingState(drawing) {
   isDrawing = drawing;
@@ -81,95 +92,118 @@ function setDrawingState(drawing) {
     drawButton.textContent =
       "カードを選んでいます…";
 
-    drawButton.classList.add("is-drawing");
+    drawButton.classList.add(
+      "is-drawing"
+    );
   } else {
     drawButton.textContent =
       "もう一度引く";
 
-    drawButton.classList.remove("is-drawing");
+    drawButton.classList.remove(
+      "is-drawing"
+    );
   }
 }
 
-/* --------------------------------
-   ドラムロール文字
--------------------------------- */
+/* ドラムロール文字 */
 
 function getDrumText(step, totalSteps) {
-  const progress = step / totalSteps;
+  const progress =
+    step / totalSteps;
 
-  if (progress < 0.25) {
-    return "だらららららららららら……";
+  if (progress < 0.23) {
+    return "だららららららららららら……";
   }
 
-  if (progress < 0.5) {
-    return "だららららららら……";
+  if (progress < 0.45) {
+    return "だららららららららら……";
   }
 
-  if (progress < 0.72) {
+  if (progress < 0.64) {
+    return "だらららららら……";
+  }
+
+  if (progress < 0.79) {
     return "だらららら……";
   }
 
-  if (progress < 0.87) {
+  if (progress < 0.9) {
     return "だらら……";
   }
 
-  if (progress < 0.96) {
+  if (progress < 0.97) {
     return "だら……";
   }
 
   return "だ……";
 }
 
-/* --------------------------------
-   シャッフル速度
--------------------------------- */
+/* 徐々に遅くする */
 
 function getShuffleDelay(step, totalSteps) {
-  const progress = step / totalSteps;
+  const progress =
+    step / totalSteps;
 
-  /*
-    最初はかなり速く、
-    後半になるほど大きく減速
-  */
-  if (progress < 0.3) {
-    return 35;
+  if (progress < 0.28) {
+    return 32;
   }
 
-  if (progress < 0.5) {
-    return 50;
+  if (progress < 0.48) {
+    return 45;
   }
 
-  if (progress < 0.68) {
-    return 75;
+  if (progress < 0.65) {
+    return 68;
   }
 
-  if (progress < 0.82) {
-    return 115;
+  if (progress < 0.79) {
+    return 105;
   }
 
-  if (progress < 0.92) {
-    return 180;
+  if (progress < 0.9) {
+    return 165;
   }
 
-  return 280;
+  if (progress < 0.96) {
+    return 235;
+  }
+
+  return 330;
 }
 
-/* --------------------------------
-   最終カードを確定
--------------------------------- */
+/* キラキラを再生 */
+
+function playSparkles() {
+  if (!sparkleLayer) {
+    return;
+  }
+
+  sparkleLayer.classList.remove(
+    "show-sparkles"
+  );
+
+  void sparkleLayer.offsetWidth;
+
+  sparkleLayer.classList.add(
+    "show-sparkles"
+  );
+}
+
+/* 最終カードを確定 */
 
 function finishDrawing(finalIndex) {
-  const finalCard = cards[finalIndex];
+  const finalCard =
+    cards[finalIndex];
 
-  lastCardIndex = finalIndex;
+  lastCardIndex =
+    finalIndex;
 
-  cardFrame.classList.remove("is-shuffling");
+  cardFrame.classList.remove(
+    "is-shuffling"
+  );
 
-  /*
-    一瞬「だん！」を見せてから
-    最終カードを表示
-  */
-  statusText.textContent = "だん！！";
+  statusText.textContent =
+    "だん！！";
 
   cardWord.textContent =
     "今日のカードが決まりました";
@@ -183,23 +217,32 @@ function finishDrawing(finalIndex) {
     statusText.textContent =
       "今日のカードはこれ！";
 
-    cardFrame.classList.add("is-revealing");
-    cardFrame.classList.add("is-sparkling");
+    cardFrame.classList.add(
+      "is-revealing"
+    );
+
+    playSparkles();
 
     window.setTimeout(() => {
-      cardFrame.classList.remove("is-revealing");
+      cardFrame.classList.remove(
+        "is-revealing"
+      );
     }, 850);
 
     window.setTimeout(() => {
-      cardFrame.classList.remove("is-sparkling");
+      if (sparkleLayer) {
+        sparkleLayer.classList.remove(
+          "show-sparkles"
+        );
+      }
+
       setDrawingState(false);
-    }, 1400);
-  }, 500);
+    }, 1450);
+
+  }, 520);
 }
 
-/* --------------------------------
-   ドラムロール開始
--------------------------------- */
+/* 占いスタート */
 
 function startDrawing() {
   if (
@@ -210,11 +253,27 @@ function startDrawing() {
     return;
   }
 
+  if (shuffleTimer) {
+    window.clearTimeout(
+      shuffleTimer
+    );
+  }
+
   setDrawingState(true);
 
-  cardFrame.classList.remove("is-revealing");
-  cardFrame.classList.remove("is-sparkling");
-  cardFrame.classList.add("is-shuffling");
+  cardFrame.classList.remove(
+    "is-revealing"
+  );
+
+  if (sparkleLayer) {
+    sparkleLayer.classList.remove(
+      "show-sparkles"
+    );
+  }
+
+  cardFrame.classList.add(
+    "is-shuffling"
+  );
 
   cardWord.textContent =
     "カードを選んでいます";
@@ -223,10 +282,12 @@ function startDrawing() {
     "どの言葉が出るか、お楽しみに。";
 
   const finalIndex =
-    getRandomCardIndex(lastCardIndex);
+    getRandomCardIndex(
+      lastCardIndex
+    );
 
   let step = 0;
-  const totalSteps = 46;
+  const totalSteps = 48;
 
   function shuffleStep() {
     if (step >= totalSteps) {
@@ -235,7 +296,10 @@ function startDrawing() {
     }
 
     const temporaryIndex =
-      Math.floor(Math.random() * cards.length);
+      Math.floor(
+        Math.random() *
+        cards.length
+      );
 
     const temporaryCard =
       cards[temporaryIndex];
@@ -247,39 +311,52 @@ function startDrawing() {
       "カードをシャッフルしています";
 
     statusText.textContent =
-      getDrumText(step, totalSteps);
+      getDrumText(
+        step,
+        totalSteps
+      );
 
     step += 1;
 
     const delay =
-      getShuffleDelay(step, totalSteps);
+      getShuffleDelay(
+        step,
+        totalSteps
+      );
 
     shuffleTimer =
-      window.setTimeout(shuffleStep, delay);
+      window.setTimeout(
+        shuffleStep,
+        delay
+      );
   }
 
   shuffleStep();
 }
 
-/* --------------------------------
-   画像を先読み
--------------------------------- */
+/* 画像を先読み */
 
 function preloadImages() {
   const imageUrls = [
     BACK_IMAGE,
-    ...cards.map((card) => card.image)
+    ...cards.map(
+      function (card) {
+        return card.image;
+      }
+    )
   ];
 
-  imageUrls.forEach((url) => {
-    const image = new Image();
-    image.src = url;
-  });
+  imageUrls.forEach(
+    function (url) {
+      const image =
+        new Image();
+
+      image.src = url;
+    }
+  );
 }
 
-/* --------------------------------
-   初期化
--------------------------------- */
+/* 初期化 */
 
 drawButton.addEventListener(
   "click",
