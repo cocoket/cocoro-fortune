@@ -2,14 +2,125 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>今日のこころ占い Ver.2</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="こころトランプの52枚から、今日のあなたのカードを1枚引く『今日のこころ占い』です。"
+  >
+
+  <title>今日のこころ占い｜こころトランプ</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <main>
-    <h1>今日のこころ占い Ver.2</h1>
-    <p>準備中です。</p>
+  <main class="fortune-app">
+
+    <section class="fortune-panel">
+
+      <header class="fortune-header">
+        <p class="eyebrow">こころトランプ</p>
+
+        <h1>今日のこころ占い</h1>
+
+        <p class="lead">
+          今日のあなたに必要な言葉を、<br>
+          こころトランプから1枚引いてみましょう。
+        </p>
+      </header>
+
+      <section
+        id="cardStage"
+        class="card-stage"
+        aria-live="polite"
+      >
+        <div id="cardFrame" class="card-frame">
+
+          <img
+            id="cardImage"
+            class="card-image"
+            src="images/パッケージ_こころトランプ.jpg"
+            alt="こころトランプのカード裏面"
+          >
+
+        </div>
+      </section>
+
+      <section class="result-area">
+
+        <p id="statusText" class="status-text">
+          カードを引く準備ができました
+        </p>
+
+        <h2 id="cardWord" class="card-word">
+          今日のカードを引いてみよう
+        </h2>
+
+        <p id="cardMessage" class="card-message">
+          カードを引いたあと、今日のキーワードが表示されます。
+        </p>
+
+      </section>
+
+      <div class="action-area">
+
+        <button
+          id="drawButton"
+          class="draw-button"
+          type="button"
+        >
+          今日のカードを引く
+        </button>
+
+      </div>
+
+      <section class="brand-area">
+
+        <p class="brand-message">
+          このカードが入っているのが<br>
+          「こころトランプ」です
+        </p>
+
+        <div class="link-buttons">
+
+          <a
+            class="link-button secondary"
+            href="https://www.cocoket.com/cocorotrump/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            こころトランプを詳しく見る
+          </a>
+
+          <a
+            class="link-button primary"
+            href="https://xgqxfy5miscuqgs8jlto.stores.jp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            購入ページを見る
+          </a>
+
+        </div>
+
+      </section>
+
+      <footer class="fortune-footer">
+        <p>
+          信じるも信じないも、あなたの「ココロ」しだい。
+        </p>
+      </footer>
+
+    </section>
+
   </main>
+
+  <script src="cards.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
