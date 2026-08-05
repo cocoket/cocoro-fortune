@@ -6,7 +6,7 @@
   テスト中は true にすると毎回シークレットが出ます。
   動作確認後は false に戻してください。
 */
-const TEST_SECRET = true;
+const TEST_SECRET =  false;
 
 /* 0.001 = 約1000回に1回 */
 const SECRET_PROBABILITY = 0.001;
