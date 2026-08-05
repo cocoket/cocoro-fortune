@@ -1,629 +1,443 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background: #fff7f1;
-    font-family:
-        "Yu Gothic",
-        "Hiragino Sans",
-        "Meiryo",
-        sans-serif;
-    color: #5a4635;
+  background: #fff7f1;
+  color: #4b3425;
+  font-family:
+    "Yu Gothic",
+    "Hiragino Sans",
+    "Meiryo",
+    sans-serif;
 }
 
 .fortune-app {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 30px 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px;
 }
 
 .fortune-panel {
-    width: 100%;
-    max-width: 480px;
-    background: #ffffff;
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
-    overflow: visible;
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+  overflow: visible;
+  transition: background .35s ease, box-shadow .35s ease;
 }
 
 .fortune-header {
-    text-align: center;
-    margin-bottom: 25px;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
 .eyebrow {
-    color: #c37b42;
-    font-weight: bold;
-    margin-bottom: 8px;
+  color: #c37b42;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 12px;
+  color: #4a2f1f;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
 }
 
 .lead {
-    color: #777;
-    line-height: 1.7;
+  color: #695548;
+  font-weight: 500;
+  line-height: 1.7;
 }
 
 .card-stage {
-    display: flex;
-    justify-content: center;
-    margin: 25px 0;
-    overflow: visible;
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+  overflow: visible;
 }
 
 .card-frame {
-    position: relative;
-    width: 260px;
-    transform-style: preserve-3d;
-    transition:
-        transform .25s ease,
-        filter .25s ease;
-    overflow: visible;
+  position: relative;
+  width: 260px;
+  transform-style: preserve-3d;
+  transition: transform .25s ease, filter .25s ease;
+  overflow: visible;
 }
 
 .card-image {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 14px;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
 }
 
 .result-area {
-    text-align: center;
-    margin: 25px 0;
+  text-align: center;
+  margin: 25px 0;
 }
 
 .status-text {
-    min-height: 1.6em;
-    margin-bottom: 10px;
-    color: #6b3f2a;
-    font-size: 1.05rem;
-    font-weight: 800;
-    letter-spacing: .04em;
+  min-height: 1.6em;
+  margin-bottom: 10px;
+  color: #5a321e;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  opacity: 1;
 }
 
 .card-word {
-    color: #b35a2d;
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    line-height: 1.5;
+  color: #a94718;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  line-height: 1.5;
 }
 
 .card-message {
-    line-height: 1.8;
-    font-size: 1rem;
+  color: #513d30;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.8;
 }
 
 .action-area {
-    text-align: center;
-    margin: 30px 0;
+  text-align: center;
+  margin: 30px 0;
 }
 
 .draw-button {
-    background: #f39b3d;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    padding: 16px 36px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        filter .2s ease;
+  background: #f39b3d;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 16px 36px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, filter .2s ease;
 }
 
 .draw-button:hover {
-    background: #e88722;
-    transform: scale(1.04);
+  background: #e88722;
+  transform: scale(1.04);
 }
 
 .draw-button:active {
-    transform: scale(.95);
+  transform: scale(.95);
 }
 
 .draw-button:disabled {
-    opacity: .72;
-    cursor: not-allowed;
+  opacity: .72;
+  cursor: not-allowed;
 }
 
 .draw-button.is-drawing {
-    animation: buttonPulse .8s infinite alternate;
+  animation: buttonPulse .8s infinite alternate;
 }
 
 .brand-area {
-    margin-top: 35px;
-    text-align: center;
+  margin-top: 35px;
+  text-align: center;
 }
 
 .brand-message {
-    margin-bottom: 18px;
-    line-height: 1.8;
+  color: #4f3a2d;
+  font-weight: 500;
+  margin-bottom: 18px;
+  line-height: 1.8;
 }
 
 .link-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .link-button {
-    display: block;
-    text-decoration: none;
-    padding: 15px;
-    border-radius: 40px;
-    font-weight: bold;
-    transition:
-        transform .2s ease,
-        filter .2s ease;
+  display: block;
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 40px;
+  font-weight: 700;
+  transition: transform .2s ease, filter .2s ease;
 }
 
 .link-button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.03);
+  transform: translateY(-2px);
+  filter: brightness(1.03);
 }
 
 .link-button.primary {
-    background: #e96a4b;
-    color: #fff;
+  background: #e96a4b;
+  color: #fff;
 }
 
 .link-button.secondary {
-    background: #ffe5c6;
-    color: #7a542c;
+  background: #ffe5c6;
+  color: #7a542c;
 }
 
 .fortune-footer {
-    margin-top: 30px;
-    text-align: center;
-    color: #999;
-    font-size: .9rem;
+  margin-top: 30px;
+  text-align: center;
+  color: #725f52;
+  font-size: .9rem;
+  font-weight: 500;
 }
 
-/* シャッフル中 */
-
+/* シャッフル */
 .card-frame.is-shuffling {
-    animation:
-        drumShuffle .12s infinite alternate ease-in-out;
+  animation: drumShuffle .12s infinite alternate ease-in-out;
 }
 
 .card-frame.is-shuffling .card-image {
-    filter:
-        brightness(1.08)
-        saturate(1.12);
-
-    box-shadow:
-        0 14px 35px rgba(0, 0, 0, .23);
+  filter: brightness(1.08) saturate(1.12);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, .23);
 }
 
-/* 最終カードの表示 */
-
+/* 最終カード */
 .card-frame.is-revealing {
-    animation:
-        finalCardReveal .85s
-        cubic-bezier(.22, 1.4, .36, 1);
+  animation:
+    finalCardReveal .85s
+    cubic-bezier(.22, 1.4, .36, 1);
 }
 
 /* キラキラ */
-
 .sparkle-layer {
-    position: absolute;
-    inset: -38px;
-    z-index: 10;
-    pointer-events: none;
-    overflow: visible;
+  position: absolute;
+  inset: -38px;
+  z-index: 10;
+  pointer-events: none;
+  overflow: visible;
 }
-
-.sparkle {
-    position: absolute;
-    opacity: 0;
-    font-size: 36px;
-    line-height: 1;
-    filter: drop-shadow(0 2px 5px rgba(225, 159, 35, .28));
-}
-
-.sparkle-1 {
-    top: 3%;
-    left: -2%;
-}
-
-.sparkle-2 {
-    top: 14%;
-    right: -3%;
-    font-size: 44px;
-}
-
-.sparkle-3 {
-    bottom: 15%;
-    left: -3%;
-    font-size: 39px;
-    color: #f1ba43;
-}
-
-.sparkle-4 {
-    right: 2%;
-    bottom: 4%;
-    font-size: 32px;
-}
-
-.show-sparkles .sparkle-1 {
-    animation: sparkleBurst1 1.2s ease-out forwards;
-}
-
-.show-sparkles .sparkle-2 {
-    animation: sparkleBurst2 1.25s ease-out .08s forwards;
-}
-
-.show-sparkles .sparkle-3 {
-    animation: sparkleBurst3 1.15s ease-out .14s forwards;
-}
-
-.show-sparkles .sparkle-4 {
-    animation: sparkleBurst4 1.2s ease-out .2s forwards;
-}
-
-/* アニメーション */
-
-@keyframes drumShuffle {
-    0% {
-        transform:
-            translateX(-7px)
-            translateY(-2px)
-            rotate(-2deg)
-            scale(1.025);
-    }
-
-    100% {
-        transform:
-            translateX(7px)
-            translateY(2px)
-            rotate(2deg)
-            scale(1.045);
-    }
-}
-
-@keyframes finalCardReveal {
-    0% {
-        opacity: .2;
-        transform:
-            scale(.68)
-            rotateY(90deg);
-        filter: brightness(1.7);
-    }
-
-    45% {
-        opacity: 1;
-        transform:
-            scale(1.16)
-            rotateY(0deg);
-        filter: brightness(1.25);
-    }
-
-    68% {
-        transform: scale(.96);
-    }
-
-    84% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-        filter: brightness(1);
-    }
-}
-
-@keyframes buttonPulse {
-    0% {
-        filter: brightness(.96);
-        transform: scale(.98);
-    }
-
-    100% {
-        filter: brightness(1.08);
-        transform: scale(1.02);
-    }
-}
-
-@keyframes sparkleBurst1 {
-    0% {
-        opacity: 0;
-        transform:
-            scale(.2)
-            rotate(-30deg);
-    }
-
-    35% {
-        opacity: 1;
-        transform:
-            scale(1.4)
-            rotate(10deg);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(-25px, -35px)
-            scale(.5)
-            rotate(35deg);
-    }
-}
-
-@keyframes sparkleBurst2 {
-    0% {
-        opacity: 0;
-        transform:
-            scale(.2)
-            rotate(30deg);
-    }
-
-    35% {
-        opacity: 1;
-        transform:
-            scale(1.45)
-            rotate(-10deg);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(28px, -38px)
-            scale(.5)
-            rotate(-35deg);
-    }
-}
-
-@keyframes sparkleBurst3 {
-    0% {
-        opacity: 0;
-        transform:
-            scale(.2)
-            rotate(-20deg);
-    }
-
-    40% {
-        opacity: 1;
-        transform:
-            scale(1.3)
-            rotate(15deg);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(-28px, 28px)
-            scale(.45)
-            rotate(35deg);
-    }
-}
-
-@keyframes sparkleBurst4 {
-    0% {
-        opacity: 0;
-        transform:
-            scale(.2)
-            rotate(20deg);
-    }
-
-    40% {
-        opacity: 1;
-        transform:
-            scale(1.35)
-            rotate(-15deg);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(28px, 30px)
-            scale(.45)
-            rotate(-35deg);
-    }
-}
-
-/* スマートフォン */
-
-@media (max-width: 480px) {
-    .fortune-panel {
-        padding: 20px;
-    }
-
-    .card-frame {
-        width: 220px;
-    }
-
-    h1 {
-        font-size: 1.7rem;
-    }
-
-    .card-word {
-        font-size: 1.5rem;
-    }
-
-    .status-text {
-        font-size: 1rem;
-    }
-
-    .sparkle-layer {
-        inset: -30px;
-    }
-}
-
-/* 動きを減らす設定 */
-
-@media (prefers-reduced-motion: reduce) {
-    .card-frame.is-shuffling,
-    .card-frame.is-revealing,
-    .draw-button.is-drawing,
-    .show-sparkles .sparkle {
-        animation: none;
-    }
-}
-/* ================================
-   文字を濃くして読みやすくする
-================================ */
-
-body {
-    color: #4b3425;
-}
-
-h1 {
-    color: #4a2f1f;
-    font-weight: 800;
-}
-
-.lead {
-    color: #695548;
-    font-weight: 500;
-}
-
-.status-text {
-    color: #5a321e;
-    font-size: 1.08rem;
-    font-weight: 800;
-    opacity: 1;
-}
-
-.card-word {
-    color: #a94718;
-    font-weight: 800;
-}
-
-.card-message {
-    color: #513d30;
-    font-weight: 500;
-}
-
-.brand-message {
-    color: #4f3a2d;
-    font-weight: 500;
-}
-
-.fortune-footer {
-    color: #725f52;
-    font-weight: 500;
-}
-
-/* キラキラは要素が作られた時だけ表示 */
 
 .sparkle-layer:empty {
-    display: none;
+  display: none;
 }
 
 .sparkle-layer:not(:empty) {
-    display: block;
+  display: block;
 }
-/* ================================
-   シークレットカード専用演出
-================================ */
 
+.sparkle {
+  position: absolute;
+  opacity: 0;
+  font-size: 36px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 5px rgba(225, 159, 35, .28));
+}
+
+.sparkle-1 { top: 3%; left: -2%; }
+.sparkle-2 { top: 14%; right: -3%; font-size: 44px; }
+.sparkle-3 { bottom: 15%; left: -3%; font-size: 39px; color: #f1ba43; }
+.sparkle-4 { right: 2%; bottom: 4%; font-size: 32px; }
+.sparkle-5 { top: 42%; left: -10%; font-size: 42px; }
+.sparkle-6 { top: 52%; right: -10%; font-size: 38px; }
+
+.show-sparkles .sparkle-1 { animation: sparkleBurst1 1.2s ease-out forwards; }
+.show-sparkles .sparkle-2 { animation: sparkleBurst2 1.25s ease-out .08s forwards; }
+.show-sparkles .sparkle-3 { animation: sparkleBurst3 1.15s ease-out .14s forwards; }
+.show-sparkles .sparkle-4 { animation: sparkleBurst4 1.2s ease-out .2s forwards; }
+.show-sparkles .sparkle-5 { animation: sparkleBurst5 1.6s ease-out .05s forwards; }
+.show-sparkles .sparkle-6 { animation: sparkleBurst6 1.7s ease-out .12s forwards; }
+
+/* シークレット */
 .card-frame.secret-card {
-    animation:
-        secretCardGlow 1.8s ease-in-out,
-        secretCardFloat 1.8s ease-in-out;
-    box-shadow:
-        0 0 22px rgba(255, 196, 54, .75),
-        0 0 48px rgba(255, 225, 125, .7),
-        0 0 85px rgba(255, 184, 44, .45);
-    border-radius: 18px;
+  animation:
+    secretCardGlow 2.2s ease-in-out,
+    secretCardFloat 2.2s ease-in-out;
+  box-shadow:
+    0 0 22px rgba(255, 196, 54, .75),
+    0 0 48px rgba(255, 225, 125, .7),
+    0 0 85px rgba(255, 184, 44, .45);
+  border-radius: 18px;
 }
 
 .card-frame.secret-card .card-image {
-    filter:
-        brightness(1.08)
-        saturate(1.12);
+  filter: brightness(1.08) saturate(1.12);
 }
 
-/* シークレット時だけ背景をふわっと光らせる */
-.fortune-panel:has(.card-frame.secret-card) {
-    animation: secretPanelFlash 1.8s ease-out;
+.fortune-panel.secret-mode {
+  animation: secretPanelFlash 2.2s ease-out;
+  box-shadow:
+    0 0 30px rgba(255, 198, 52, .35),
+    0 14px 38px rgba(0, 0, 0, .1);
 }
 
-/* シークレットカードの金色発光 */
+.fortune-panel.secret-mode .status-text,
+.fortune-panel.secret-mode .card-word {
+  color: #a66b00;
+  text-shadow:
+    0 1px 0 #fff6cf,
+    0 0 12px rgba(255, 207, 71, .5);
+}
+
+/* アニメーション */
+@keyframes drumShuffle {
+  0% {
+    transform:
+      translateX(-7px)
+      translateY(-2px)
+      rotate(-2deg)
+      scale(1.025);
+  }
+
+  100% {
+    transform:
+      translateX(7px)
+      translateY(2px)
+      rotate(2deg)
+      scale(1.045);
+  }
+}
+
+@keyframes finalCardReveal {
+  0% {
+    opacity: .2;
+    transform: scale(.68) rotateY(90deg);
+    filter: brightness(1.7);
+  }
+
+  45% {
+    opacity: 1;
+    transform: scale(1.16) rotateY(0deg);
+    filter: brightness(1.25);
+  }
+
+  68% { transform: scale(.96); }
+  84% { transform: scale(1.05); }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes buttonPulse {
+  0% {
+    filter: brightness(.96);
+    transform: scale(.98);
+  }
+
+  100% {
+    filter: brightness(1.08);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes sparkleBurst1 {
+  0% { opacity: 0; transform: scale(.2) rotate(-30deg); }
+  35% { opacity: 1; transform: scale(1.4) rotate(10deg); }
+  100% { opacity: 0; transform: translate(-25px, -35px) scale(.5) rotate(35deg); }
+}
+
+@keyframes sparkleBurst2 {
+  0% { opacity: 0; transform: scale(.2) rotate(30deg); }
+  35% { opacity: 1; transform: scale(1.45) rotate(-10deg); }
+  100% { opacity: 0; transform: translate(28px, -38px) scale(.5) rotate(-35deg); }
+}
+
+@keyframes sparkleBurst3 {
+  0% { opacity: 0; transform: scale(.2) rotate(-20deg); }
+  40% { opacity: 1; transform: scale(1.3) rotate(15deg); }
+  100% { opacity: 0; transform: translate(-28px, 28px) scale(.45) rotate(35deg); }
+}
+
+@keyframes sparkleBurst4 {
+  0% { opacity: 0; transform: scale(.2) rotate(20deg); }
+  40% { opacity: 1; transform: scale(1.35) rotate(-15deg); }
+  100% { opacity: 0; transform: translate(28px, 30px) scale(.45) rotate(-35deg); }
+}
+
+@keyframes sparkleBurst5 {
+  0% { opacity: 0; transform: scale(.2) rotate(-30deg); }
+  35% { opacity: 1; transform: scale(1.6) rotate(18deg); }
+  100% { opacity: 0; transform: translate(-38px, -8px) scale(.5) rotate(50deg); }
+}
+
+@keyframes sparkleBurst6 {
+  0% { opacity: 0; transform: scale(.2) rotate(30deg); }
+  35% { opacity: 1; transform: scale(1.55) rotate(-18deg); }
+  100% { opacity: 0; transform: translate(38px, 8px) scale(.5) rotate(-50deg); }
+}
+
 @keyframes secretCardGlow {
-    0% {
-        filter: brightness(1);
-    }
+  0% { filter: brightness(1); }
 
-    25% {
-        filter:
-            brightness(1.3)
-            drop-shadow(0 0 14px rgba(255, 207, 71, .9));
-    }
+  25% {
+    filter:
+      brightness(1.3)
+      drop-shadow(0 0 14px rgba(255, 207, 71, .9));
+  }
 
-    55% {
-        filter:
-            brightness(1.12)
-            drop-shadow(0 0 28px rgba(255, 221, 123, .85));
-    }
+  55% {
+    filter:
+      brightness(1.12)
+      drop-shadow(0 0 28px rgba(255, 221, 123, .85));
+  }
 
-    100% {
-        filter: brightness(1);
-    }
+  100% { filter: brightness(1); }
 }
 
-/* シークレットカードが少し浮く */
 @keyframes secretCardFloat {
-    0% {
-        transform: scale(.85) translateY(14px);
-    }
-
-    35% {
-        transform: scale(1.12) translateY(-8px);
-    }
-
-    60% {
-        transform: scale(1.03) translateY(-3px);
-    }
-
-    100% {
-        transform: scale(1) translateY(0);
-    }
+  0% { transform: scale(.85) translateY(14px); }
+  35% { transform: scale(1.12) translateY(-8px); }
+  60% { transform: scale(1.03) translateY(-3px); }
+  100% { transform: scale(1) translateY(0); }
 }
 
-/* 背景が一瞬ゴールドに光る */
 @keyframes secretPanelFlash {
-    0% {
-        background: #ffffff;
-    }
-
-    22% {
-        background: #fff5c9;
-    }
-
-    50% {
-        background: #fffaf0;
-    }
-
-    100% {
-        background: #ffffff;
-    }
+  0% { background: #fff; }
+  22% { background: #fff5c9; }
+  50% { background: #fffaf0; }
+  100% { background: #fff; }
 }
 
-/* シークレット表示文字 */
-.card-frame.secret-card + .result-area .status-text,
-.card-frame.secret-card + .result-area .card-word {
-    color: #b57a00;
-    text-shadow:
-        0 1px 0 #fff6cf,
-        0 0 10px rgba(255, 207, 71, .45);
+/* スマホ */
+@media (max-width: 480px) {
+  .fortune-panel {
+    padding: 20px;
+  }
+
+  .card-frame {
+    width: 220px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .card-word {
+    font-size: 1.5rem;
+  }
+
+  .status-text {
+    font-size: 1rem;
+  }
+
+  .sparkle-layer {
+    inset: -30px;
+  }
 }
 
-/* 動きを減らす設定への配慮 */
+/* 動きを減らす設定 */
 @media (prefers-reduced-motion: reduce) {
-    .card-frame.secret-card,
-    .fortune-panel:has(.card-frame.secret-card) {
-        animation: none;
-    }
+  .card-frame.is-shuffling,
+  .card-frame.is-revealing,
+  .card-frame.secret-card,
+  .fortune-panel.secret-mode,
+  .draw-button.is-drawing,
+  .show-sparkles .sparkle {
+    animation: none;
+  }
 }

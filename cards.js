@@ -59,7 +59,7 @@ const cards = [
   { suit: "spade", rank: "Q", word: "多様性", image: "images/スペードQ_多様性.jpg" },
   { suit: "spade", rank: "K", word: "謙虚", image: "images/スペードK_謙虚.jpg" },
 
-  // シークレット（超レア）
+  // シークレット
   {
     suit: "secret",
     rank: "SECRET",
