@@ -12,7 +12,7 @@ const TEST_SECRET = false;
 const SECRET_PROBABILITY = 0.001;
 
 const BACK_IMAGE =
-  "画像/パッケージ_こころトランプ.jpg";
+  "images/パッケージ_こころトランプ.jpg";
 
 const cardImage = document.getElementById("cardImage");
 const cardFrame = document.getElementById("cardFrame");
