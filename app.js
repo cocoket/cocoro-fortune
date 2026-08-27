@@ -11,8 +11,10 @@ const TEST_SECRET = false;
 /* 0.001 = 約1000回に1回 */
 const SECRET_PROBABILITY = 0.001;
 
-const BACK_IMAGE =
-  "images/パッケージ_こころトランプ.jpg";
+const BACK_IMAGES = [
+  "images/パッケージ_こころトランプ.jpg",
+  "画像/パッケージ_こころトランプ.jpg"
+];
 
 const cardImage = document.getElementById("cardImage");
 const cardFrame = document.getElementById("cardFrame");
@@ -187,7 +189,14 @@ function displayCard(card) {
 }
 
 function showBackCard() {
-  cardImage.src = BACK_IMAGE;
+  let backImageIndex = 0;
+  cardImage.src = BACK_IMAGES[backImageIndex];
+  cardImage.onerror = function () {
+    backImageIndex += 1;
+    if (backImageIndex < BACK_IMAGES.length) {
+      cardImage.src = BACK_IMAGES[backImageIndex];
+    }
+  };
   cardImage.alt = "こころトランプのカード裏面";
   hideNewspaperLink();
 

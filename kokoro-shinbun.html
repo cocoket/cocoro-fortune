@@ -15,11 +15,25 @@
     </main>
 
     <script>
+      // 新聞画像は現在の日付ではなく、刊（朝刊・夕刊）とカードで選ぶ。
+      // これで日付が変わっても「準備中」にならない。
       const newspaperImages = {
-        "2026-08-27|morning|club-5": "images/kokoro_shinbun/club5_morning.png",
-        "2026-08-27|evening|club-5": "images/kokoro_shinbun/club5_evening.png",
-        "2026-08-27|morning|heart-7": "images/kokoro_shinbun/heart7_morning.png",
-        "2026-08-27|evening|heart-7": "images/kokoro_shinbun/heart7_evening.png"
+        "morning|club-5": [
+          "images/kokoro_shinbun/club5_morning.png",
+          "画像/kokoro_shinbun/club5_morning.png"
+        ],
+        "evening|club-5": [
+          "images/kokoro_shinbun/club5_evening.png",
+          "画像/kokoro_shinbun/club5_evening.png"
+        ],
+        "morning|heart-7": [
+          "images/kokoro_shinbun/heart7_morning.png",
+          "画像/kokoro_shinbun/heart7_morning.png"
+        ],
+        "evening|heart-7": [
+          "images/kokoro_shinbun/heart7_evening.png",
+          "画像/kokoro_shinbun/heart7_evening.png"
+        ]
       };
 
       const params = new URLSearchParams(window.location.search);
@@ -27,15 +41,22 @@
       const edition = params.get("edition") || "";
       const card = params.get("card") || "";
       const content = params.get("content") || "";
-      const key = date + "|" + edition + "|" + card;
-      const imagePath = newspaperImages[key];
+      const key = edition + "|" + card;
+      const imagePaths = newspaperImages[key];
       const result = document.getElementById("newspaperResult");
 
-      if (imagePath && content === "v0.1-locked") {
+      if (imagePaths && content === "v0.1-locked") {
         const image = document.createElement("img");
         image.className = "newspaper-image";
-        image.src = imagePath;
         image.alt = "今日のこころ新聞";
+        let pathIndex = 0;
+        image.src = imagePaths[pathIndex];
+        image.addEventListener("error", function () {
+          pathIndex += 1;
+          if (pathIndex < imagePaths.length) {
+            image.src = imagePaths[pathIndex];
+          }
+        });
         result.replaceChildren(image);
       } else {
         result.innerHTML =
