@@ -13,7 +13,9 @@ const SECRET_PROBABILITY = 0.001;
 
 const BACK_IMAGES = [
   "images/パッケージ_こころトランプ.jpg",
-  "画像/パッケージ_こころトランプ.jpg"
+  "images/images/パッケージ_こころトランプ.jpg",
+  "画像/パッケージ_こころトランプ.jpg",
+  "画像/images/パッケージ_こころトランプ.jpg"
 ];
 
 const cardImage = document.getElementById("cardImage");
