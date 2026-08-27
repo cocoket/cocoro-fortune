@@ -6,13 +6,13 @@
   テスト中は true にすると毎回シークレットが出ます。
   動作確認後は false に戻してください。
 */
-const TEST_SECRET =  false;
+const TEST_SECRET = false;
 
 /* 0.001 = 約1000回に1回 */
 const SECRET_PROBABILITY = 0.001;
 
 const BACK_IMAGE =
-  "images/パッケージ_こころトランプ.jpg";
+  "画像/パッケージ_こころトランプ.jpg";
 
 const cardImage = document.getElementById("cardImage");
 const cardFrame = document.getElementById("cardFrame");
@@ -22,10 +22,86 @@ const cardWord = document.getElementById("cardWord");
 const cardMessage = document.getElementById("cardMessage");
 const sparkleLayer = document.getElementById("sparkleLayer");
 const fortunePanel = document.querySelector(".fortune-panel");
+const resultArea = document.querySelector(".result-area");
+
+/* こころ新聞の初期対応カード */
+const NEWSPAPER_PAGE = "kokoro-shinbun.html";
+const NEWSPAPER_CONTENT_VERSION = "v0.1-locked";
+const NEWSPAPER_SUPPORTED_CARDS = new Set(["club-5", "heart-7"]);
+
+const newspaperLink = document.createElement("a");
+newspaperLink.className = "newspaper-link";
+newspaperLink.textContent = "今日のこころ新聞を見る";
+newspaperLink.setAttribute("aria-hidden", "true");
+
+if (resultArea) {
+  resultArea.appendChild(newspaperLink);
+}
 
 let lastCardIndex = -1;
 let isDrawing = false;
 let shuffleTimer = null;
+
+function getJapanNewspaperContext(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+
+  const values = parts.reduce(function (result, part) {
+    if (part.type !== "literal") {
+      result[part.type] = part.value;
+    }
+    return result;
+  }, {});
+
+  const hour = Number(values.hour);
+
+  return {
+    date: values.year + "-" + values.month + "-" + values.day,
+    edition: hour >= 5 && hour < 17 ? "morning" : "evening"
+  };
+}
+
+function getNewspaperCardId(card) {
+  if (!card || card.suit === "secret") {
+    return "";
+  }
+
+  return card.suit + "-" + String(card.rank).toLowerCase();
+}
+
+function hideNewspaperLink() {
+  newspaperLink.classList.remove("is-visible");
+  newspaperLink.removeAttribute("href");
+  newspaperLink.setAttribute("aria-hidden", "true");
+}
+
+function updateNewspaperLink(card, context) {
+  const cardId = getNewspaperCardId(card);
+
+  if (!NEWSPAPER_SUPPORTED_CARDS.has(cardId)) {
+    hideNewspaperLink();
+    return;
+  }
+
+  const params = new URLSearchParams({
+    date: context.date,
+    edition: context.edition,
+    card: cardId,
+    content: NEWSPAPER_CONTENT_VERSION
+  });
+  const target = new URL(NEWSPAPER_PAGE, document.baseURI);
+  target.search = params.toString();
+
+  newspaperLink.href = target.href;
+  newspaperLink.classList.add("is-visible");
+  newspaperLink.setAttribute("aria-hidden", "false");
+}
 
 function getSecretCardIndex() {
   return cards.findIndex(function (card) {
@@ -113,6 +189,7 @@ function displayCard(card) {
 function showBackCard() {
   cardImage.src = BACK_IMAGE;
   cardImage.alt = "こころトランプのカード裏面";
+  hideNewspaperLink();
 
   statusText.textContent = "カードを引く準備ができました";
   cardWord.textContent = "今日のカードを引いてみよう";
@@ -228,6 +305,7 @@ function finishDrawing(finalIndex) {
 
   window.setTimeout(function () {
     displayCard(finalCard);
+    updateNewspaperLink(finalCard, getJapanNewspaperContext());
 
     statusText.textContent = isSecret
       ? "🎉✨ シークレット！！ ✨🎉"
@@ -278,6 +356,7 @@ function startDrawing() {
 
   cardFrame.classList.remove("is-revealing");
   cardFrame.classList.remove("secret-card");
+  hideNewspaperLink();
 
   if (fortunePanel) {
     fortunePanel.classList.remove("secret-mode");

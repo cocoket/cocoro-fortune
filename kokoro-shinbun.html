@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>今日のこころ新聞｜ここケット</title>
+    <link rel="stylesheet" href="kokoro-shinbun.css">
+  </head>
+  <body>
+    <main class="newspaper-app" aria-live="polite">
+      <a class="back-link" href="./">今日のこころ占いへ戻る</a>
+      <section id="newspaperResult" class="newspaper-result">
+        <p>今日のこころ新聞を準備しています…</p>
+      </section>
+    </main>
+
+    <script>
+      const newspaperImages = {
+        "2026-08-26|morning|club-5": "画像/kokoro_shinbun/club5_morning.png",
+        "2026-08-26|evening|club-5": "画像/kokoro_shinbun/club5_evening.png",
+        "2026-08-26|morning|heart-7": "画像/kokoro_shinbun/heart7_morning.png",
+        "2026-08-26|evening|heart-7": "画像/kokoro_shinbun/heart7_evening.png"
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const date = params.get("date") || "";
+      const edition = params.get("edition") || "";
+      const card = params.get("card") || "";
+      const content = params.get("content") || "";
+      const key = date + "|" + edition + "|" + card;
+      const imagePath = newspaperImages[key];
+      const result = document.getElementById("newspaperResult");
+
+      if (imagePath && content === "v0.1-locked") {
+        const image = document.createElement("img");
+        image.className = "newspaper-image";
+        image.src = imagePath;
+        image.alt = "今日のこころ新聞";
+        result.replaceChildren(image);
+      } else {
+        result.innerHTML =
+          "<h1>今日のこころ新聞</h1>" +
+          "<p>このカードの新聞は、ただいま準備中です。</p>" +
+          "<p class=\"small-note\">新しい新聞ができたら、ここに届きます。</p>";
+      }
+    </script>
+  </body>
+</html>

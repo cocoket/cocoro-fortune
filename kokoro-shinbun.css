@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #fff7f1;
+  color: #4b3425;
+  font-family: "Yu Gothic", "Hiragino Sans", "Meiryo", sans-serif;
+}
+
+.newspaper-app {
+  width: min(100%, 640px);
+  margin: 0 auto;
+  padding: 20px 14px 36px;
+  text-align: center;
+}
+
+.back-link {
+  display: inline-block;
+  margin: 0 0 16px;
+  color: #7a542c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.newspaper-result {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  padding: 12px 0;
+}
+
+.newspaper-result h1 {
+  margin: 0 0 10px;
+  color: #4a2f1f;
+  font-size: 1.8rem;
+}
+
+.newspaper-result p {
+  margin: 6px 0;
+  line-height: 1.8;
+}
+
+.small-note {
+  color: #725f52;
+  font-size: .9rem;
+}
+
+.newspaper-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(88, 57, 34, .16);
+}
